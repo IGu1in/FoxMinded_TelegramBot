@@ -14,8 +14,8 @@ namespace TGBot
 {
     public class UAHBot
     {
-        List<Models.User> users;
-        readonly string _token = "5018725104:AAHtSpg7ykLoorww0dAQ2gfl4SQlPzJ7wQY";
+        private List<Models.User> users;
+        private readonly string _token = "5018725104:AAHtSpg7ykLoorww0dAQ2gfl4SQlPzJ7wQY";
 
         public UAHBot()
         {
@@ -25,16 +25,13 @@ namespace TGBot
         public async void BotAsync()
         {
             var botClient = new TelegramBotClient(_token);
-
             using var cts = new CancellationTokenSource();
-
             var receiverOptions = new ReceiverOptions
             {
                 AllowedUpdates = { }
             };
             botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cancellationToken: cts.Token);
             var me = await botClient.GetMeAsync();
-            Console.WriteLine($"Start listening for @{me.Username}");
             Console.ReadLine();
             cts.Cancel();
         }
@@ -47,7 +44,6 @@ namespace TGBot
                   => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
                 _ => exception.ToString()
             };
-
             Console.WriteLine(ErrorMessage);
 
             return Task.CompletedTask;
@@ -91,12 +87,11 @@ namespace TGBot
                 users.Add(user);
             }
 
-
             if (user.Currency != null)
             {
                 switch (messageText)
                 {
-                    case var someVal when new Regex(@"[0-3]\d\.[0,1]\d\.[1,2]\d{3}").IsMatch(someVal):
+                    case var value when new Regex(@"[0-3]\d\.[0,1]\d\.[1,2]\d{3}").IsMatch(value):
                         user.Data = messageText;
                         var course = user.GetCourse();
                         sentMessage = await botClient.SendTextMessageAsync(
@@ -111,10 +106,10 @@ namespace TGBot
                             cancellationToken: cancellationToken);
                         user.Currency = null;
                         user.Data = null;
+
                         break;
 
-                    default:
-                        
+                    default:                        
                         sentMessage = await botClient.SendTextMessageAsync(
                             chatId: chatId,
                             text: "Enter the date in the correct format:\n",
@@ -135,6 +130,7 @@ namespace TGBot
                            replyMarkup: new ReplyKeyboardRemove(),
                            cancellationToken: cancellationToken);
                         user.Currency = "USD";
+
                         break;
 
                     default:
