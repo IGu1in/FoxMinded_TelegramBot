@@ -9,7 +9,7 @@ namespace TGBot.Models
 {
     public class User
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
         public string Currency { get; set; }
         public string Data { get; set; }
 
@@ -20,7 +20,7 @@ namespace TGBot.Models
 
         public User(long id)
         {
-            ID = id;
+            Id = id;
         }
 
         public string GetCourse()
@@ -66,10 +66,9 @@ namespace TGBot.Models
 
         private bool IsCorrectData()
         {
-            DateTime data;
+            var maxDifferenceOfDays = 4360;
             var nowData = DateTime.Now;
-
-            var isData = DateTime.TryParse(Data, out data);
+            var isData = DateTime.TryParse(Data, out var data);
 
             if (isData)
             {
@@ -78,24 +77,14 @@ namespace TGBot.Models
                 {
                     var diff = nowData.Subtract(data);
 
-                    if (diff.TotalDays < 4360)
+                    if (diff.TotalDays < maxDifferenceOfDays)
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
                 }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }
