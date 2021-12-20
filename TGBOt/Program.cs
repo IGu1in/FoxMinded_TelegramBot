@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace TGBot
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var bot = new UAHBot();
-            bot.CallBotAsync();
+            await bot.BotAsync();
             Console.ReadLine();
         }
     }
