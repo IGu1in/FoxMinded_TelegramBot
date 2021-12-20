@@ -22,7 +22,12 @@ namespace TGBot
             users = new List<Models.User>();
         }
 
-        public async Task BotAsync()
+        public async void CallBotAsync()
+        {
+            await BotAsync();
+        }
+
+        private async Task BotAsync()
         {
             var botClient = new TelegramBotClient(_token);
             using var cts = new CancellationTokenSource();
