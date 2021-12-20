@@ -6,10 +6,14 @@ namespace TGBot
     {
         static void Main(string[] args)
         {
-            var bot = new UAHBot();
-
-            bot.BotAsync();
+            StartBotAsync();
             Console.ReadLine();
+        }
+
+        static async void StartBotAsync()
+        {
+            var bot = new UAHBot();
+            await bot.BotAsync();
         }
     }
 }

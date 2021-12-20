@@ -58,10 +58,9 @@ namespace TGBot.Models
 
                 return "Data: " + Data + "\n 1 " + Currency + "= " + answer.SaleRateNB.ToString() + " UAH";
             }
-            else
-            {
-                return "Could not get data for this date";
-            }
+
+            return "Could not get data for this date";
+            
         }
 
         private bool IsCorrectData()

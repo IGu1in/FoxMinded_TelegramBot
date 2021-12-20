@@ -31,8 +31,8 @@ namespace TGBot
                 AllowedUpdates = { }
             };
             botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cancellationToken: cts.Token);
-            var me = await botClient.GetMeAsync();
-            Console.WriteLine("Start listening for {0}", me.Username);
+            var me = await botClient.GetMeAsync(cancellationToken: cts.Token);
+            Console.WriteLine(me.FirstName);
             Console.ReadLine();
             cts.Cancel();
         }
